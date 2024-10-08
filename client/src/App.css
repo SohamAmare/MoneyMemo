@@ -40,3 +40,31 @@
 .read-the-docs {
   color: #888;
 } */
+/* App.css */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 100vh;
+}
+
+.main-container {
+  width: 100%;
+  max-width: 350px;
+  margin-top: 20px;
+}
+
+.image-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+body {
+  background-image: url("./assets/bg-image-2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+}

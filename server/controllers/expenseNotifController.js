@@ -145,6 +145,7 @@ const scheduleRecurringNotification = (expense) => {
     }
   );
   console.log(`Recurring notification scheduled for ${expense.description}`);
+  alert(`Recurring notification scheduled for ${expense.description}`);
 };
 
 // const ExpNotifSchema = require("../models/expenseNotifModel");
