@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const connectDB = require("./utils/connect");
 const UserRoute = require("./routes/UserRoute");
-
+const ChartRoute = require("./routes/expenseNotifRoute");
 require("dotenv").config();
 
 const app = express();
@@ -18,6 +18,7 @@ app.use(express.json());
 
 app.use("/api", UserRoute);
 app.use("/api/expenses", require("./routes/expenseNotifRoute"));
+app.use("/api/chartexpenses", ChartRoute);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 

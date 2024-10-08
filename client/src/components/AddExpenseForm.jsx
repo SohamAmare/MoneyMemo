@@ -9,6 +9,7 @@ function AddExpenseForm(props) {
   const [dueDate, setDueDate] = useState("");
   const [isRecurring, setIsRecurring] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("authToken"));
+  // const [render, setRender] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +34,10 @@ function AddExpenseForm(props) {
 
       console.log("Expense added:", res);
       alert("Expense added successfully!");
-      props.onAdd(res.data); // Update parent with new expense
+      props.setRender(!props.render);
+
+      // props.setExpense({});
+      // props.onAdd(res.data); // Update parent with new expense
       setDescription("");
       setAmount("");
       setDueDate("");

@@ -1,10 +1,11 @@
 import React from "react";
 import "../App.css";
+import MonthlyExpenseChart from "../components/MonthlyExpenseChart";
 
 function Analytics() {
   return (
     <>
-      <h1>Welcome to analytics page</h1>
+      <MonthlyExpenseChart />
     </>
   );
 }

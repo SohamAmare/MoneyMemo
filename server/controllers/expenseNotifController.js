@@ -1,8 +1,78 @@
 // @ts-nocheck
 
+const { default: mongoose } = require("mongoose");
 const ExpenseNotif = require("../models/expenseNotifModel");
 const cron = require("node-cron");
 const nodemailer = require("nodemailer");
+
+exports.getMonthlyExpenses = async (req, res) => {
+  try {
+    const userId = req.user; // Get userId from the request
+    console.log("syaam", userId);
+    // Convert the userId to an ObjectId properly
+    const userObjectId = new mongoose.Types.ObjectId(userId);
+
+    const months = {};
+    const expense = await ExpenseNotif.find({ userId });
+    console.log(expense);
+
+    expense.map((user) => {
+      console.log(String(user.dueDate).split(" ")[1]);
+      const temp = months[String(user.dueDate).split(" ")[1]] || 0;
+      months[String(user.dueDate).split(" ")[1]] = temp + user.amount;
+    });
+    console.log(months);
+    res.json(months);
+
+    // Check if expenses were found
+    // if (!expenses || expenses.length === 0) {
+    //   return res
+    //     .status(200)
+    //     .json({ message: "No expenses found for the user" });
+    // }
+
+    // // Format the aggregated result for frontend use
+    // const formattedExpenses = expenses.map((expense) => ({
+    //   month: expense._id, // Month number (1 for Jan, 2 for Feb, etc.)
+    //   totalAmount: expense.totalAmount, // Total amount for that month
+    // }));
+
+    // // Send the formatted expenses as the response
+    // res.status(200).json(formattedExpenses);
+  } catch (error) {
+    console.error(error); // Log any errors for debugging
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// In expenseNotifController.js
+// exports.getMonthlyExpenses = async (req, res) => {
+//   try {
+//     const userId = req.user; // Assuming you have user authentication middleware
+//     const expenses = await ExpenseNotif.aggregate([
+//       { $match: { userId } },
+//       {
+//         $group: {
+//           _id: { $month: "$dueDate" }, // Group by month
+//           totalAmount: { $sum: "$amount" }, // Sum up the amounts
+//         },
+//       },
+//       { $sort: { _id: 1 } }, // Sort by month
+//     ]);
+
+//     console.log("hvsbker", expenses);
+
+//     // Map the results to a more usable format
+//     const formattedExpenses = expenses.map((expense) => ({
+//       month: expense._id,
+//       totalAmount: expense.totalAmount,
+//     }));
+
+//     res.status(200).json(formattedExpenses);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
 exports.createExpenseForNotif = async (req, res) => {
   try {
